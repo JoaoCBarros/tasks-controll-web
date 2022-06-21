@@ -1,5 +1,5 @@
 import React from 'react';
-import { FaTrashAlt } from 'react-icons/fa';
+import { FaTrashAlt, FaInfoCircle } from 'react-icons/fa';
 import './Task.css';
 const Task = ({task, handleTaskClick, handleTaskDelete}) => {
     return ( 
@@ -8,7 +8,10 @@ const Task = ({task, handleTaskClick, handleTaskDelete}) => {
                 <h1>{task.title}</h1>
             </div>
             <div className='buttons-container'>
-                <button className='remove-task-button' onClick={() => handleTaskDelete(task.id)}>
+                <button className='remove-task-button'>
+                    <FaInfoCircle style={{color: "chartreuse"}}/>
+                </button>
+                <button className='see-task-details-button' onClick={() => handleTaskDelete(task.id)}>
                     <FaTrashAlt style={{color: "chartreuse"}}/>
                 </button>
             </div>

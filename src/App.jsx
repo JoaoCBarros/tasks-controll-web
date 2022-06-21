@@ -1,8 +1,12 @@
 import React, { useState } from "react";
-import './App.css';
+import {v4 as uuidv4} from "uuid"
+
 import AddTask from "./components/AddTask";
 import Tasks from "./components/Tasks";
-import {v4 as uuidv4} from "uuid"
+import Header from "./components/Header";
+
+import './App.css';
+
 const App = () => {
   const [tasks, setTasks] = useState([{
     id: '1',
@@ -45,6 +49,7 @@ const handleTaskDelete = (taskId) => {
   return (
     <>
       <div className="container">
+        <Header/>
         <AddTask hanldeTaskAddition={hanldeTaskAddition} />
         <Tasks tasks={tasks} handleTaskClick={handleTaskClick} handleTaskDelete={handleTaskDelete}/>
       </div>
