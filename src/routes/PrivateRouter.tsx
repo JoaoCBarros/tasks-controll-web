@@ -62,7 +62,6 @@ const ContainerMain = styled.section`
 const Content = styled.div`
     justify-content: center;
     display: flex;
-    min-height: 70vh;
 `
 
 const Footer = styled.div`
