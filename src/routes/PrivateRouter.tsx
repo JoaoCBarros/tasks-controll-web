@@ -25,15 +25,14 @@ const LogoTitle = styled.h2`
 `
 
 const Header = styled.div`
-    -webkit-box-shadow: 0px 1px 10px 0.5px rgba(189,189,189,1);
-    -moz-box-shadow: 0px 1px 10px 0.5px rgba(189,189,189,1);
-    box-shadow: 0px 1px 10px 0.5px rgba(189,189,189,1);
+    border-bottom: 1px gray solid;
     height: 100px;
     width: 100%;
     display: flex;
     align-items: center;
     padding: 0 2%;
     justify-content: space-between;
+    background-color: #FFFFFF;
 `
 
 const LoggedUser = styled.div`
@@ -61,6 +60,27 @@ const ContainerMain = styled.section`
 `
 
 const Content = styled.div`
+    justify-content: center;
+    display: flex;
+    min-height: 70vh;
+`
+
+const Footer = styled.div`
+    background-color: #22272D;
+    height: 170px;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+`
+
+const TitleFooter = styled.h3`
+     font-size: 20px;
+    color: #FFFFFF;
+    line-height: 170px;
+`
+
+const FooterLink = styled.a`
+    color: #FFFFFF;
 `
 
 type Props = {
@@ -97,6 +117,11 @@ export const PrivateRouter = ({children}: Props) => {
                         {children}
                     </Content>
                 </UserContext.Provider>
+                <Footer>
+                    <TitleFooter>
+                        Desenvolvido por <FooterLink href="https://www.linkedin.com/in/jo%C3%A3o-pedro-barros-05bb94180/" target="_blank">João Pedro Barros</FooterLink>
+                    </TitleFooter>
+                </Footer>
             </ContainerMain>
         </PageBoxTemplate>
     ) : (<Navigate to="/login"/>);

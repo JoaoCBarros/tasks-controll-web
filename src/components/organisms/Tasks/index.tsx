@@ -14,7 +14,7 @@ const TasksContainer = styled.section`
     background-color: #E9EBEE;
     width: 100%;
     display: flex;
-    padding: 2% 4%;
+    padding: 2% 0;
     justify-content: center;
     flex-flow: row wrap;
 `
@@ -28,12 +28,16 @@ const Task = styled.div<ContainerProps>`
     -webkit-box-shadow: 0px 0px 4px 0px rgba(172,180,186,1);
     -moz-box-shadow: 0px 0px 4px 0px rgba(172,180,186,1);
     box-shadow: 0px 0px 4px 0px rgba(172,180,186,1);
-    border-left: ${(props => props.statusColor)} 8px solid;
+    border-left: ${(props => props.statusColor)} 4px solid;
+    border-right: #22272d67 0.5px solid;
+    border-top: #22272d67 0.5px solid;
+    border-bottom: #22272d67 0.5px solid;
 `
 
 const TaskTitle = styled.h3`
+    text-align: left;
     color: #22272D;
-    padding: 10px;
+    padding: 10px 0;
 `
 
 const TaskFooter = styled.div`
@@ -59,13 +63,17 @@ const FinishTaskButton = styled.button`
     margin: 7px 0;
     width: 40%;
     border: none;
-    background-color: #3D27BA;
+    background-color: #22272D;
     color: #FFFFFF;
     padding: 0 24px;
-    height: 44px;
+    height: 30px;
     border-radius: 8px;
     line-height: 100%;
     cursor: pointer;
+
+    &:hover {
+        background-color: #333a43;
+    }
 `
 const AddTaskButton = styled.button`
     font-size: 14px;
@@ -89,7 +97,9 @@ const TaskMeta = styled.div`
 const TasksHeader = styled.section`
     display: flex;
     justify-content: space-between;
-    padding: 15px 2%;
+    padding: 25px 2%;
+    background-color: #FFFFFF;
+    border-radius: 15px;
 `
 const Filters = styled.div`
 `
@@ -130,6 +140,15 @@ const SimpleTitle = styled.h2`
     font-size: 20px;
     color: #22272D;
     margin: 15px 0;
+`
+
+const TaskContainer = styled.div`
+    width: 100%;
+    justify-content: center;
+    display: flex;
+    flex-direction: column;
+    padding: 0 4%;
+    margin-top: 15px;
 `
 export interface ITask {
     title: string
@@ -181,7 +200,7 @@ export const Tasks = ({tasks, handleGetTasks}: Props) => {
         await taskService.finishTask(taskId)
         handleGetTasks()
     }
-    return <>
+    return <TaskContainer>
         <Modal
             show={show}
             handleClose={handleModalClose}
@@ -241,22 +260,27 @@ export const Tasks = ({tasks, handleGetTasks}: Props) => {
                     {task.title}
                 </TaskTitle>
                 <TaskDescription>
-                    {task.description}
+                    {limitCaracteres(task.description, 103)}
                 </TaskDescription>
                 <TaskFooter>
-                    <FinishTaskButton
-                        onClick={() => handleFinishTask(task.id)}
-                    >
-                        Finalizar Task
-                    </FinishTaskButton>
                     <TaskMeta>
                         <TaskData>
                             {expiresAt}
                         </TaskData>
                     </TaskMeta>
+                    <FinishTaskButton
+                        onClick={() => handleFinishTask(task.id)}
+                    >
+                        Finalizar Task
+                    </FinishTaskButton>
                 </TaskFooter>
             </Task>
             })}
         </TasksContainer>
-    </>
+    </TaskContainer>
 };
+
+const limitCaracteres = (dataStringToLimit: string, maxCaracteres: number) => {
+    const dataStringLimited = dataStringToLimit.substring(0,maxCaracteres);
+    return dataStringLimited.length === maxCaracteres ? `${dataStringLimited}...`: dataStringLimited;
+}

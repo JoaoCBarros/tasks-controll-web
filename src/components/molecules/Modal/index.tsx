@@ -37,12 +37,13 @@ const ModalMain = styled.div<TModalMainProps>`
     display: ${props => props.display};
     flex-direction: column;
     align-items: center;
+    border-radius: 4px;
 `
 
 const CloseModalButton = styled.button`
     font-size: 14px;
-    margin: 7px 0;
-    width: 200px;
+    margin: 7px 5px;
+    width: 100px;
     border: none;
     background-color: #22272D;
     color: #FFFFFF;
@@ -54,7 +55,7 @@ const CloseModalButton = styled.button`
 `
 const ActionModalButton = styled.button`
     font-size: 14px;
-    margin: 7px 0;
+    margin: 7px 5px;
     width: 200px;
     border: none;
     background-color: #3D27BA;
@@ -66,7 +67,8 @@ const ActionModalButton = styled.button`
     cursor: pointer;
 `
 const ModalFooter = styled.div`
-    
+    display: flex;
+    justify-content: space-between;
 `
 
 export const Modal = ({handleAddTask, handleClose, show, children}: Props) => {
