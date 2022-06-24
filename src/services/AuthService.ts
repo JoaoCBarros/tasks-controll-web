@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const apiUrl = process.env.REACT_APP_API;
-
+const authLocalStorage = "tasks-controll@user";
 export const authService = {
   async authenticate(data: any) {
     const endpoint = `${apiUrl}/auth`;
@@ -10,11 +10,11 @@ export const authService = {
 
   setLoggerUser(data: any) {
     const parsedData = JSON.stringify(data);
-    localStorage.setItem("user", parsedData);
+    localStorage.setItem(authLocalStorage, parsedData);
   },
 
   getLoggerUser() {
-    const data = localStorage.getItem("user");
+    const data = localStorage.getItem(authLocalStorage);
     if (!data) return null;
 
     try {
@@ -24,5 +24,9 @@ export const authService = {
       console.log(error);
       return null;
     }
+  },
+
+  loggout() {
+    localStorage.removeItem(authLocalStorage);
   },
 };

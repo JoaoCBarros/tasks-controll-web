@@ -1,5 +1,5 @@
 import { createContext, ReactNode, useEffect, useState } from "react";
-import { Navigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import {FaSignInAlt} from 'react-icons/fa'
 
@@ -8,15 +8,6 @@ import { authService } from "../services/AuthService";
 const PageBoxTemplate = styled.section`
     display: flex;
     width: 100%;
-`
-
-const SideBar = styled.div`
-    padding: 1% 2%;
-    width: 400px;
-    background-color: #22272D;
-    display: flex;
-    justify-content: center;
-    min-height: 100vh;
 `
 
 const LogoSite = styled.div`
@@ -29,7 +20,7 @@ const LogoSite = styled.div`
 
 const LogoTitle = styled.h2`
     font-size: 24px;
-    color: #FFFFFF;
+    color: #22272D;
     cursor: pointer;
 `
 
@@ -42,7 +33,7 @@ const Header = styled.div`
     display: flex;
     align-items: center;
     padding: 0 2%;
-    justify-content: flex-end;
+    justify-content: space-between;
 `
 
 const LoggedUser = styled.div`
@@ -78,22 +69,27 @@ type Props = {
 export const PrivateRouter = ({children}: Props) => {
     const auth = authService.getLoggerUser()
     const UserContext = createContext(auth)
+    const navigate = useNavigate()
+    const handleLoggout = () => {
+        authService.loggout();
+        navigate("/login")
+    }
     return auth ? (
         <PageBoxTemplate>
-            <SideBar>
-                <LogoSite>
-                    <LogoTitle>
-                        TASKS CONTROLL
-                    </LogoTitle>
-                </LogoSite>
-            </SideBar>
             <ContainerMain>
                 <Header>
+                    <LogoSite>
+                        <LogoTitle>
+                            TASKS CONTROLL
+                        </LogoTitle>
+                    </LogoSite>
                     <LoggedUser>
                         <SimpleTitle>
-                            jpedro.profissional@gmail.com
+                            {auth.email}
                         </SimpleTitle>
-                        <SignInAlt />
+                        <SignInAlt 
+                            onClick={handleLoggout}
+                        />
                     </LoggedUser>
                 </Header>
                 <UserContext.Provider value={authService.getLoggerUser()}>
