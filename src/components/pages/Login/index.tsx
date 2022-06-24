@@ -1,4 +1,5 @@
 import {useState} from 'react';
+import { Navigate, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { authService } from '../../../services/AuthService';
 
@@ -54,7 +55,7 @@ const Title = styled.h1`
 export const Login = (props: Props) => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-
+    const navigate = useNavigate()
     const handleSubmitLoginForm = async (e: any) => {
         e.preventDefault();
         try {
@@ -63,13 +64,15 @@ export const Login = (props: Props) => {
                 password
             });
             authService.setLoggerUser(response.data);
+            navigate("/")
         } catch (error) {
             console.log(error);
             alert("Erro ao efetuar o login");
         }
         
     }
-    return (
+    const auth = authService.getLoggerUser()
+    return !auth ? (
         <MainContainer>
             <BoxLoginContainer>
                 <Title>Login</Title>    
@@ -89,5 +92,5 @@ export const Login = (props: Props) => {
                 </Form>
             </BoxLoginContainer>
         </MainContainer>
-    );
+    ): <Navigate to="/"/>;
 };

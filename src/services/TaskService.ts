@@ -1,19 +1,21 @@
 import axios from "axios";
-import { config } from "process";
 import { authService } from "./AuthService";
 
-const apiUrl = "http://localhost:3001";
+const apiUrl = process.env.REACT_APP_API;
 
 interface TAddTask {
   title: string;
   description: string;
   expiresAt: string;
 }
-
-const { token } = authService.getLoggerUser();
-
 export const taskService = {
+  getToken() {
+    return authService.getLoggerUser()
+      ? authService.getLoggerUser().token
+      : null;
+  },
   async getTasks() {
+    const token = this.getToken();
     const response = await axios.get(`${apiUrl}/tasks`, {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -24,6 +26,7 @@ export const taskService = {
   },
 
   async addTask(data: TAddTask) {
+    const token = this.getToken();
     const response = await axios.post(`${apiUrl}/tasks`, data, {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -34,6 +37,7 @@ export const taskService = {
   },
 
   async finishTask(taskId: string) {
+    const token = this.getToken();
     await axios.put(
       `${apiUrl}/tasks/${taskId}`,
       {},

@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const apiUrl = "http://localhost:3001";
+const apiUrl = process.env.REACT_APP_API;
 
 export const authService = {
   async authenticate(data: any) {
@@ -9,16 +9,16 @@ export const authService = {
   },
 
   setLoggerUser(data: any) {
-    let parsedData = JSON.stringify(data);
+    const parsedData = JSON.stringify(data);
     localStorage.setItem("user", parsedData);
   },
 
   getLoggerUser() {
-    let data = localStorage.getItem("user");
+    const data = localStorage.getItem("user");
     if (!data) return null;
 
     try {
-      let parsedData = JSON.parse(data);
+      const parsedData = JSON.parse(data);
       return parsedData;
     } catch (error) {
       console.log(error);
