@@ -258,7 +258,8 @@ export const Tasks = ({tasks, handleGetTasks}: Props) => {
                     if(task.status === 'RED'){
                         statusColor = '#FF3541';
                     }
-                    const expiresAt = DateTime.fromISO(task.expiresAt.toString())
+                    const [date,] = task.expiresAt.split("T")
+                    const expiresAt = DateTime.fromISO(`${date}T23:00:00`)
                     .toLocaleString({month: 'long', day: 'numeric', year: 'numeric'})
 
                     return <Task statusColor={statusColor} key={index}>
