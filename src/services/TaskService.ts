@@ -9,6 +9,7 @@ interface TAddTask {
   expiresAt: string;
 }
 export const taskService = {
+  taskBaseUrl: `${apiUrl}/task`,
   getToken() {
     return authService.getLoggerUser()
       ? authService.getLoggerUser().token
@@ -16,7 +17,7 @@ export const taskService = {
   },
   async getTasks() {
     const token = this.getToken();
-    const response = await axios.get(`${apiUrl}/tasks`, {
+    const response = await axios.get(`${this.taskBaseUrl}`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -27,7 +28,7 @@ export const taskService = {
 
   async addTask(data: TAddTask) {
     const token = this.getToken();
-    const response = await axios.post(`${apiUrl}/tasks`, data, {
+    const response = await axios.post(`${this.taskBaseUrl}`, data, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -39,7 +40,7 @@ export const taskService = {
   async finishTask(taskId: string) {
     const token = this.getToken();
     await axios.put(
-      `${apiUrl}/tasks/${taskId}`,
+      `${apiUrl}/${this.taskBaseUrl}/${taskId}`,
       {},
       {
         headers: {

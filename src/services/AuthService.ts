@@ -4,7 +4,7 @@ const apiUrl = process.env.REACT_APP_API;
 const authLocalStorage = "tasks-controll@user";
 export const authService = {
   async authenticate(data: any) {
-    const endpoint = `${apiUrl}/auth`;
+    const endpoint = `${apiUrl}/login`;
     return axios.post(endpoint, data);
   },
 
@@ -27,6 +27,15 @@ export const authService = {
   },
 
   loggout() {
-    localStorage.removeItem(authLocalStorage);
+    const endpoint = `${apiUrl}/loggout`;
+    return axios.post(
+      endpoint,
+      {},
+      {
+        headers: {
+          Authorization: `Bearer ${this.getLoggerUser()}`,
+        },
+      }
+    );
   },
 };
