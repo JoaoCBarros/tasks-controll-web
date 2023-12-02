@@ -168,12 +168,11 @@ export const Tasks = ({ tasks, handleGetTasks }: Props) => {
   };
 
   const handleAddTask = async () => {
-    const response = await taskService.addTask({
+    await taskService.addTask({
       title: taskTitle,
       description: taskDescription,
       expiresAt,
     });
-    console.log(response);
     setExpiresAt("");
     setTaskTitle("");
     setTaskDescription("");
@@ -224,40 +223,44 @@ export const Tasks = ({ tasks, handleGetTasks }: Props) => {
       </TasksHeader>
       <TasksContainer>
         <TasksContent>
-          {tasks.map((task, index) => {
-            let statusColor: string = "#1ECB4F";
-            if (task.status === "GREEN") {
-              statusColor = "#1ECB4F";
-            }
-            if (task.status === "YELLOW") {
-              statusColor = "#FFAE00";
-            }
-            if (task.status === "RED") {
-              statusColor = "#FF3541";
-            }
-            const expiresAt = DateTime.fromISO(
-              task.expiresAt.toString()
-            ).toLocaleString({
-              month: "long",
-              day: "numeric",
-              year: "numeric",
-            });
+          {tasks.length <= 0 ? (
+            <SimpleTitle>Nenhuma tarefa para fazer!</SimpleTitle>
+          ) : (
+            tasks.map((task, index) => {
+              let statusColor: string = "#1ECB4F";
+              if (task.status === "GREEN") {
+                statusColor = "#1ECB4F";
+              }
+              if (task.status === "YELLOW") {
+                statusColor = "#FFAE00";
+              }
+              if (task.status === "RED") {
+                statusColor = "#FF3541";
+              }
+              const expiresAt = DateTime.fromISO(
+                task.expiresAt.toString()
+              ).toLocaleString({
+                month: "long",
+                day: "numeric",
+                year: "numeric",
+              });
 
-            return (
-              <Task statusColor={statusColor} key={index}>
-                <TaskTitle>{task.title}</TaskTitle>
-                <TaskDescription>{task.description}</TaskDescription>
-                <TaskFooter>
-                  <FinishTaskButton onClick={() => handleFinishTask(task.id)}>
-                    Finalizar Task
-                  </FinishTaskButton>
-                  <TaskMeta>
-                    <TaskData>{expiresAt}</TaskData>
-                  </TaskMeta>
-                </TaskFooter>
-              </Task>
-            );
-          })}
+              return (
+                <Task statusColor={statusColor} key={index}>
+                  <TaskTitle>{task.title}</TaskTitle>
+                  <TaskDescription>{task.description}</TaskDescription>
+                  <TaskFooter>
+                    <FinishTaskButton onClick={() => handleFinishTask(task.id)}>
+                      Finalizar Task
+                    </FinishTaskButton>
+                    <TaskMeta>
+                      <TaskData>{expiresAt}</TaskData>
+                    </TaskMeta>
+                  </TaskFooter>
+                </Task>
+              );
+            })
+          )}
         </TasksContent>
       </TasksContainer>
     </>

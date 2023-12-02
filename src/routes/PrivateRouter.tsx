@@ -75,6 +75,11 @@ type Props = {
   children: ReactNode;
 };
 export const PrivateRouter = ({ children }: Props) => {
+  const logout = () => {
+    authService.logout();
+    window.location.reload();
+  };
+
   const auth = authService.getLoggerUser();
   const UserContext = createContext(auth);
   return auth ? (
@@ -86,7 +91,7 @@ export const PrivateRouter = ({ children }: Props) => {
           </LogoSite>
           <LoggedUser>
             <SimpleTitle>{authService.getLoggerUser().email}</SimpleTitle>
-            <SignInAlt />
+            <SignInAlt onClick={() => logout()} />
           </LoggedUser>
         </Header>
         <UserContext.Provider value={authService.getLoggerUser()}>

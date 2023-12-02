@@ -3,14 +3,14 @@ import styled from "styled-components";
 export const MainContainer = styled.section`
   background-color: #dbdbdb;
   height: 100vh;
-  padding: 10% 0;
+  display: flex;
 `;
 
 export const BoxLoginContainer = styled.div`
-  padding: 40px 20px;
-  width: 400px;
-  height: 300px;
-  background-color: white;
-  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  padding: 150px 20px;
   border-radius: 8px;
+  flex: 1;
+  background-color: #fff;
 `;
