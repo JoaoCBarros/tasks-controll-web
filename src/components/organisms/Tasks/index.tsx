@@ -11,7 +11,11 @@ interface ContainerProps {
 
 const TasksContainer = styled.section`
   background-color: #e9ebee;
-  min-height: calc(100vh - 188px);
+  width: 100%;
+  display: flex;
+  padding: 2% 4%;
+  justify-content: center;
+  flex-flow: row wrap;
 `;
 
 const Task = styled.div<ContainerProps>`
@@ -127,14 +131,6 @@ const SimpleTitle = styled.h2`
   margin: 15px 0;
 `;
 
-const TasksContent = styled.h2`
-  background-color: #e9ebee;
-  width: 100%;
-  display: flex;
-  padding: 2% 4%;
-  justify-content: center;
-  flex-flow: row wrap;
-`;
 export interface ITask {
   title: string;
   status: TTaskStatus;
@@ -222,46 +218,44 @@ export const Tasks = ({ tasks, handleGetTasks }: Props) => {
         <AddTaskButton onClick={handleModalOpen}>Adicionar Task</AddTaskButton>
       </TasksHeader>
       <TasksContainer>
-        <TasksContent>
-          {tasks.length <= 0 ? (
-            <SimpleTitle>Nenhuma tarefa para fazer!</SimpleTitle>
-          ) : (
-            tasks.map((task, index) => {
-              let statusColor: string = "#1ECB4F";
-              if (task.status === "GREEN") {
-                statusColor = "#1ECB4F";
-              }
-              if (task.status === "YELLOW") {
-                statusColor = "#FFAE00";
-              }
-              if (task.status === "RED") {
-                statusColor = "#FF3541";
-              }
-              const expiresAt = DateTime.fromISO(
-                task.expiresAt.toString()
-              ).toLocaleString({
-                month: "long",
-                day: "numeric",
-                year: "numeric",
-              });
+        {tasks.length <= 0 ? (
+          <SimpleTitle>Nenhuma tarefa para fazer!</SimpleTitle>
+        ) : (
+          tasks.map((task, index) => {
+            let statusColor: string = "#1ECB4F";
+            if (task.status === "GREEN") {
+              statusColor = "#1ECB4F";
+            }
+            if (task.status === "YELLOW") {
+              statusColor = "#FFAE00";
+            }
+            if (task.status === "RED") {
+              statusColor = "#FF3541";
+            }
+            const expiresAt = DateTime.fromISO(
+              task.expiresAt.toString()
+            ).toLocaleString({
+              month: "long",
+              day: "numeric",
+              year: "numeric",
+            });
 
-              return (
-                <Task statusColor={statusColor} key={index}>
-                  <TaskTitle>{task.title}</TaskTitle>
-                  <TaskDescription>{task.description}</TaskDescription>
-                  <TaskFooter>
-                    <FinishTaskButton onClick={() => handleFinishTask(task.id)}>
-                      Finalizar Task
-                    </FinishTaskButton>
-                    <TaskMeta>
-                      <TaskData>{expiresAt}</TaskData>
-                    </TaskMeta>
-                  </TaskFooter>
-                </Task>
-              );
-            })
-          )}
-        </TasksContent>
+            return (
+              <Task statusColor={statusColor} key={index}>
+                <TaskTitle>{task.title}</TaskTitle>
+                <TaskDescription>{task.description}</TaskDescription>
+                <TaskFooter>
+                  <FinishTaskButton onClick={() => handleFinishTask(task.id)}>
+                    Finalizar Task
+                  </FinishTaskButton>
+                  <TaskMeta>
+                    <TaskData>{expiresAt}</TaskData>
+                  </TaskMeta>
+                </TaskFooter>
+              </Task>
+            );
+          })
+        )}
       </TasksContainer>
     </>
   );

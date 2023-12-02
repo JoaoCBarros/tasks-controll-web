@@ -57,7 +57,6 @@ const Title = styled.h1`
 `;
 
 const SideBannerLogin = styled.div`
-  background-color: red;
   height: 100vh;
   width: 100%;
   flex: 1;
